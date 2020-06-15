@@ -7,17 +7,17 @@
 </template>
 
 <script>
-import NewsHome from "./components/NewsHome";
+import NewsHome from "@/components/NewsHome";
 
 export default {
   name: "App",
 
   components: {
-    NewsHome,
+    NewsHome
   },
 
   data: () => ({
     //
-  }),
+  })
 };
 </script>
