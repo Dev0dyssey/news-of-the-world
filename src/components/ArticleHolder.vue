@@ -2,14 +2,26 @@
   <v-container>
     <v-row>
       <v-col xs="1" md="4" v-for="(article, index) in articles" :key="index">
-        <v-card height="100%" outlined>
+        <v-card
+          height="100%"
+          outlined
+          class="d-flex flex-column"
+          style="justify-content: space-between"
+        >
           <v-card-text>
-            <v-img :src="article.urlToImage"></v-img>
-            <h1>{{ article.title }}</h1>
-            <div class="text--primary">
+            <a :href="article.url" style="color: black">
+              <v-img :src="article.urlToImage"></v-img>
+              <h1>
+                {{ article.title }}
+              </h1>
+            </a>
+            <div class="text--primary" style="text-align: left">
               {{ article.description }}
             </div>
           </v-card-text>
+          <v-card-subtitle>
+            Published: {{ article.publishedAt }}
+          </v-card-subtitle>
         </v-card>
       </v-col>
     </v-row>
@@ -23,19 +35,19 @@ export default {
   name: "ArticleHolder",
   props: {
     articles: {
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     onMounted(() => {
       console.log("Articles: ", props);
     });
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.artciles {
-  width: 100%;
+a {
+  text-decoration: none;
 }
 </style>
