@@ -19,8 +19,8 @@
               {{ article.description }}
             </div>
           </v-card-text>
-          <v-card-subtitle>
-            Published: {{ article.publishedAt }}
+          <v-card-subtitle style="text-align: left">
+            Published: {{ parseISOString(article.publishedAt) }}
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -39,9 +39,20 @@ export default {
     }
   },
   setup(props) {
+    const parseISOString = s => {
+      let b = s.split(/\D+/);
+      return new Date(
+        Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6])
+      ).toLocaleDateString();
+    };
+
     onMounted(() => {
       console.log("Articles: ", props);
     });
+
+    return {
+      parseISOString
+    };
   }
 };
 </script>
