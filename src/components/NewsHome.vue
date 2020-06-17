@@ -56,7 +56,7 @@
         </v-navigation-drawer>
       </v-col>
       <v-col xs="12" md="9">
-        <ArticleHolder :articles="loadedArticles" />
+        <ArticleHolder :articles="responseArticles" />
       </v-col>
     </v-row>
   </v-container>
@@ -64,7 +64,7 @@
 
 <script>
 import { ref, onMounted, watchEffect } from "@vue/composition-api";
-import axios from "axios";
+import useNewsAPI from "@/logic/useNewsAPI";
 
 import ArticleHolder from "./ArticleHolder";
 
@@ -75,6 +75,7 @@ export default {
   },
 
   setup() {
+    const { key, responseArticles, callAPI } = useNewsAPI();
     const urlKey = process.env.VUE_APP_API_KEY;
     let title = ref("News of the world!");
     let loadedArticles = ref();
@@ -120,34 +121,11 @@ export default {
     });
 
     onMounted(() => {
-      axios
-        .get(
-          `http://newsapi.org/v2/top-headlines?country=gb&category=${category.value}&apiKey=${urlKey}`
-        )
-        .then(res => {
-          const { articles } = res.data;
-          loadedArticles.value = articles;
-        })
-        .catch(err => {
-          console.log("Error: ", err);
-        });
+      callAPI("gb", "general");
     });
 
     watchEffect(() => {
-      console.log(
-        `http://newsapi.org/v2/top-headlines?country=${country.value}&category=${category.value}&apiKey=${urlKey}`
-      );
-      axios
-        .get(
-          `http://newsapi.org/v2/top-headlines?country=${country.value}&category=${category.value}&apiKey=${urlKey}`
-        )
-        .then(res => {
-          const { articles } = res.data;
-          loadedArticles.value = articles;
-        })
-        .catch(err => {
-          console.log("Error occured: ", err);
-        });
+      callAPI(country.value, category.value);
     });
 
     return {
@@ -157,7 +135,10 @@ export default {
       countries,
       category,
       country,
-      urlKey
+      urlKey,
+      key,
+      responseArticles,
+      callAPI
     };
   }
 };
