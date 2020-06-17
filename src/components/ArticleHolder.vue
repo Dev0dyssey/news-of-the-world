@@ -20,7 +20,8 @@
             </div>
           </v-card-text>
           <v-card-subtitle style="text-align: left">
-            Published: {{ parseISOString(article.publishedAt) }}
+            Published: {{ parseISOString(article.publishedAt) }} -
+            {{ article.source.name }}
           </v-card-subtitle>
         </v-card>
       </v-col>
