@@ -5,7 +5,7 @@
 npm install
 ```
 
-### Instruction
+### Instructions
 ```
 User can currently select out of two options: Country and Category
 Combining the two a user is able to get a tailored list of news articles
